@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <AssemblyName>me.lukiiy.Chalk</AssemblyName>
+        <AssemblyTitle>Chalk</AssemblyTitle>
+        <AssemblyName>Chalk</AssemblyName>
+        <Version>0.1.0</Version>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <DeployModFiles Include="$(TargetPath)" BepInExDir="plugins/" />
+        <!--
+            If your project needs additional files, e.g. asset bundles,
+            you can add them here. Example:
+
+            <DeployModFiles Include="./Assets/bundle" BepInExDir="plugins/" />
+        -->
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="BepInEx">
+            <HintPath>lib/BepInEx.dll</HintPath>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>lib/0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>lib/UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="GameAssembly">
+            <HintPath>lib/GameAssembly.dll</HintPath>
+        </Reference>
+        <Reference Include="SharedAssembly">
+            <HintPath>lib/SharedAssembly.dll</HintPath>
+        </Reference>
+        <Reference Include="Mirror">
+            <HintPath>lib/Mirror.dll</HintPath>
+        </Reference>
+        <Reference Include="InputSystem">
+            <HintPath>lib/Unity.InputSystem.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+</Project>
