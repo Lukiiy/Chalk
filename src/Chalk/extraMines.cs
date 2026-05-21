@@ -11,7 +11,7 @@ public class ExtraMines
     public static bool holeMinefield = true;
     public static bool seeded = true;
 
-    public static IEnumerator SeedMinesAfterOneFrame()
+    public static IEnumerator Start()
     {
         yield return null;
 

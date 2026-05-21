@@ -32,7 +32,7 @@ public partial class Chalk : BaseUnityPlugin
 
         if (current == MatchState.TeeOff)
         {
-            StartCoroutine(ExtraMines.SeedMinesAfterOneFrame());
+            StartCoroutine(ExtraMines.Start());
         }
 
         if (current == MatchState.Ended || current == MatchState.Initializing)
