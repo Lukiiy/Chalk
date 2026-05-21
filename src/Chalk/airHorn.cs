@@ -20,13 +20,11 @@ public static class Airhorn
         var owner = __instance.PlayerInfo;
         if (owner == null) return;
 
-        Vector3 origin = owner.transform.position;
-        float range = GameManager.ItemSettings.AirhornRange * rangeMult;
-        float rangeSqr = range * range;
+        float rangeSqr = (float) Math.Pow(GameManager.ItemSettings.AirhornRange * rangeMult, 2);
 
         foreach (var ball in UnityEngine.Object.FindObjectsByType<GolfBall>(FindObjectsSortMode.None))
         {
-            if (ball == null || !ball.isServer || (ball.transform.position - origin).sqrMagnitude > rangeSqr) continue;
+            if (ball == null || !ball.isServer || (ball.transform.position - owner.transform.position).sqrMagnitude > rangeSqr) continue;
 
             ball.AsEntity.Rigidbody.AddForce(Vector3.up * upwardLaunch, ForceMode.VelocityChange);
             VfxManager.ServerPlayPooledVfxForAllClients(VfxType.AirhornPlayerTriggered, ball.transform.position, Quaternion.identity);
