@@ -16,22 +16,23 @@ public static class WindBursts
 
     public static void Update()
     {
-        if (!toggled) return;
+        if (!toggled || !WindManager.HasInstance || !CourseManager.HasInstance) return;
 
-        var w = WindManager.Instance;
-        if (w == null || !w.isServer || !Chalk.IsMatchActive()) return;
+        var wind = WindManager.Instance;
+        if (wind == null || !Chalk.IsMatchActive()) return;
+        if (!wind.isServer) return;
 
         float t = Time.time;
 
         if (end == 0f && t >= next)
         {
             stored = WindManager.CurrentWindSpeed;
-            w.NetworkcurrentWindSpeed = Mathf.Min(WindManager.MaxPossibleWindSpeed, stored * (int) UnityEngine.Random.Range(3.5f, 5f));
+            wind.NetworkcurrentWindSpeed = Mathf.Min(WindManager.MaxPossibleWindSpeed, stored * (int) UnityEngine.Random.Range(3.5f, 5f));
             end = t + 10f;
         }
         else if (end != 0f && t >= end)
         {
-            w.NetworkcurrentWindSpeed = stored;
+            wind.NetworkcurrentWindSpeed = stored;
             end = 0f;
             next = t + UnityEngine.Random.Range(15f, 45f);
         }
