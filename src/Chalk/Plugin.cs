@@ -7,8 +7,6 @@ namespace Chalk;
 [BepInAutoPlugin]
 public partial class Plugin : BaseUnityPlugin
 {
-    private bool _seededMatch;
-
     private void Awake()
     {
         Harmony harmony = new Harmony(Info.Metadata.GUID);
