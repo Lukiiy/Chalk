@@ -19,7 +19,7 @@ public static class WindBursts
         if (!toggled) return;
 
         var w = WindManager.Instance;
-        if (w == null || !w.isServer || !Plugin.IsMatchActive()) return;
+        if (w == null || !w.isServer || !Chalk.IsMatchActive()) return;
 
         float t = Time.time;
 

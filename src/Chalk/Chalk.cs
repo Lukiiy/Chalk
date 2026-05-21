@@ -5,11 +5,11 @@ using UnityEngine;
 namespace Chalk;
 
 [BepInAutoPlugin]
-public partial class Plugin : BaseUnityPlugin
+public partial class Chalk : BaseUnityPlugin
 {
     private void Awake()
     {
-        Harmony harmony = new Harmony(Info.Metadata.GUID);
+        Harmony harmony = new(Info.Metadata.GUID);
         harmony.PatchAll();
 
         WindBursts.Start();

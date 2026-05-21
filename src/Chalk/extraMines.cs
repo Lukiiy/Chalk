@@ -27,7 +27,7 @@ public class ExtraMines
         {
             if (UnityEngine.Random.value > .5f) continue;
 
-            Plugin.SpawnServerMine(spawner.transform.position + Vector3.up * .25f);
+            Chalk.SpawnServerMine(spawner.transform.position + Vector3.up * .25f);
         }
     }
 
@@ -45,6 +45,6 @@ public class ExtraMines
             new(-r, 0, 0)
         ];
 
-        foreach (var off in offsets) Plugin.SpawnServerMine(flagPos + off + new Vector3(0f, .1f, 0f));
+        foreach (var off in offsets) Chalk.SpawnServerMine(flagPos + off + new Vector3(0f, .1f, 0f));
     }
 }
