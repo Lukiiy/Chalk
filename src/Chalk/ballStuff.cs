@@ -6,9 +6,12 @@ namespace Chalk;
 public class BallPatches
 {
     public static bool pushToggle = true;
-    private const float pushRadius = 0.8f;
+
+    private const float pushRadius = .8f;
     private const float pushForce = 3f;
     private const float pushRadiusSq = pushRadius * pushRadius;
+    private const float poleSafeRadius = 10f;
+    private const float poleSafeRadiusSq = poleSafeRadius * poleSafeRadius;
 
     public static void Update()
     {
@@ -33,6 +36,8 @@ public class BallPatches
             {
                 if (ball == null) return;
                 if (ball.Networkowner == golfer) continue;
+
+                if (GolfHoleManager.HasInstance && GolfHoleManager.MainHole != null && (ball.Rigidbody.position - GolfHoleManager.MainHole.transform.position).sqrMagnitude <= poleSafeRadiusSq) continue;
 
                 Vector3 delta = ball.Rigidbody.position - playerPos;
                 delta.y = 0f;
