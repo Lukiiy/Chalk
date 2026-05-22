@@ -5,6 +5,7 @@ namespace Chalk;
 
 public class BallPatches
 {
+    public static bool pushToggle = true;
     private const float pushRadius = 0.8f;
     private const float pushForce = 3f;
     private const float pushRadiusSq = pushRadius * pushRadius;

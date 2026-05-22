@@ -1,4 +1,4 @@
-﻿﻿using BepInEx;
+﻿﻿﻿using BepInEx;
 using Chalk.utils;
 using HarmonyLib;
 using UnityEngine;
@@ -21,7 +21,7 @@ public partial class Chalk : BaseUnityPlugin
     {
         WindBursts.Update();
 
-        if (CourseManager.HasInstance && CourseManager.Instance.isServer) BallPatches.Update();
+        if (BallPatches.pushToggle && CourseManager.HasInstance && CourseManager.Instance.isServer) BallPatches.Update();
     }
 
     private void OnDestroy()
