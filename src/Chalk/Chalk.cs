@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿﻿using BepInEx;
+using Chalk.utils;
 using HarmonyLib;
 using UnityEngine;
 
@@ -47,12 +48,11 @@ public partial class Chalk : BaseUnityPlugin
     {
         if (!CourseManager.HasInstance || !CourseManager.Instance.isServer) return;
 
-        PlayerInfo[] players = FindObjectsByType<PlayerInfo>(FindObjectsSortMode.None);
-        if (players.Length == 0) return;
+        PlayerInventory? inv = FakeInventory.Get();
+        if (inv == null) return;
 
-        PlayerInfo owner = players[UnityEngine.Random.Range(0, players.Length)]; // random owner
         ItemUseId useId = new(0uL, 1, ItemType.Landmine);
 
-        CourseManager.ServerSpawnLandmine(pos, Quaternion.identity, Vector3.zero, Vector3.zero, LandmineArmType.Planted, useId, owner.Inventory);
+        CourseManager.ServerSpawnLandmine(pos, Quaternion.identity, Vector3.zero, Vector3.zero, LandmineArmType.Planted, useId, inv);
     }
 }
