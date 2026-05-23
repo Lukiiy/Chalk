@@ -1,4 +1,4 @@
-﻿﻿﻿using BepInEx;
+﻿using BepInEx;
 using Chalk.utils;
 using HarmonyLib;
 using UnityEngine;
