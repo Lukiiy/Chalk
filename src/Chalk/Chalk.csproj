@@ -38,6 +38,15 @@
         <Reference Include="Mirror">
             <HintPath>lib/Mirror.dll</HintPath>
         </Reference>
+        <Reference Include="TMPro">
+            <HintPath>lib/Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UI">
+            <HintPath>lib/UnityEngine.UI.dll</HintPath>
+        </Reference>
+        <Reference Include="Localization">
+            <HintPath>lib/Unity.Localization.dll</HintPath>
+        </Reference>
         <Reference Include="InputSystem">
             <HintPath>lib/Unity.InputSystem.dll</HintPath>
         </Reference>
