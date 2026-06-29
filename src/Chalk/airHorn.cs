@@ -7,7 +7,6 @@ namespace Chalk;
 [HarmonyPatch]
 public static class Airhorn
 {
-    public static bool toggle = true;
     private const float rangeMult = 1.2f;
     private const float upwardLaunch = 25f;
     private const float cartTiltForce = 18f;
@@ -16,7 +15,7 @@ public static class Airhorn
     [HarmonyPostfix]
     private static void Used(PlayerInventory __instance)
     {
-        if (!toggle || __instance == null || !NetworkServer.active) return;
+        if (!Chalk.airHornExtra.Value || __instance == null || !NetworkServer.active) return;
 
         var owner = __instance.PlayerInfo;
         if (owner == null) return;

@@ -7,16 +7,14 @@ namespace Chalk;
 [HarmonyPatch]
 public class ExtraMines
 {
-    public static bool minedLootboxes = true;
-    public static bool holeMinefield = true;
     public static bool seeded = true;
 
     public static IEnumerator Start()
     {
         yield return null;
 
-        if (minedLootboxes) SpawnLootBoxMines();
-        if (holeMinefield) SpawnHoleMinefield();
+        if (Chalk.minedLootboxes.Value) SpawnLootBoxMines();
+        if (Chalk.holeMinefield.Value) SpawnHoleMinefield();
 
         seeded = true;
     }

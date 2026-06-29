@@ -6,13 +6,11 @@ namespace Chalk;
 [HarmonyPatch]
 public class InstaKill
 {
-    public static bool toggled = true;
-
     [HarmonyPatch(typeof(GolfBall), "ServerReturnToBounds")]
     [HarmonyPostfix]
     private static void BallReturnToBounds(GolfBall __instance)
     {
-        if (!toggled || __instance == null || !__instance.isServer) return;
+        if (!Chalk.instaKills.Value || __instance == null || !__instance.isServer) return;
 
         var playerInfo = __instance.Networkowner?.PlayerInfo;
         if (playerInfo == null) return;

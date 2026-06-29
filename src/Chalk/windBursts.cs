@@ -6,8 +6,6 @@ namespace Chalk;
 [HarmonyPatch]
 public static class WindBursts
 {
-    public static bool toggled = true;
-
     private static float next; // time
     private static float end; // time
     private static int stored;
@@ -16,7 +14,7 @@ public static class WindBursts
 
     public static void Update()
     {
-        if (!toggled || !WindManager.HasInstance || !CourseManager.HasInstance) return;
+        if (!Chalk.windBursts.Value || !WindManager.HasInstance || !CourseManager.HasInstance) return;
 
         var wind = WindManager.Instance;
         if (wind == null || !Chalk.IsMatchActive()) return;
