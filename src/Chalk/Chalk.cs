@@ -15,6 +15,7 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> ballPush = null!;
     internal static ConfigEntry<bool> instaKills = null!;
     internal static ConfigEntry<bool> extraLoots = null!;
+    internal static ConfigEntry<bool> airHornExtra = null!;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public partial class Chalk : BaseUnityPlugin
         ballPush = Config.Bind("Chalk", "Ball Pushing", true, "Allows players to slowly push others' balls when close");
         instaKills = Config.Bind("Chalk", "Instant Kills", true, "Throwing a ball out of bounds makes you explode");
         extraLoots = Config.Bind("Chalk", "Extra Loot", true, "Knocking out players gives you loot");
+        airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
 
         harmony.PatchAll();
         CourseManager.MatchStateChanged += OnMatchStateChanged;
