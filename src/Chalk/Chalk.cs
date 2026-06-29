@@ -35,8 +35,6 @@ public partial class Chalk : BaseUnityPlugin
     private void Update()
     {
         WindBursts.Update();
-
-        if (BallPatches.pushToggle && CourseManager.HasInstance && CourseManager.Instance.isServer) BallPatches.Update();
     }
 
     private void OnDestroy()

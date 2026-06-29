@@ -46,18 +46,19 @@ public static class Airhorn
         {
             if (player == null || player == owner || (player.transform.position - owner.transform.position).sqrMagnitude > rangeSqr) continue;
 
-            Rigidbody rb = player.GetComponent<Rigidbody>();
-            if (rb == null) continue;
+            Rigidbody body = player.GetComponentInChildren<Rigidbody>();
+            if (body == null) continue;
 
             Vector3 tilt = new(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-2f, 2f), UnityEngine.Random.Range(-1f, 1f));
 
-            rb.AddTorque(tilt.normalized * cartTiltForce, ForceMode.VelocityChange);
+            body.AddTorque(tilt.normalized * cartTiltForce, ForceMode.VelocityChange);
         }
     }
 
     private static IEnumerator<object> LaunchBallAfterDelay(GolfBall ball, float delay)
     {
         yield return new WaitForSeconds(delay);
+
         if (ball == null || !ball.isServer) yield break;
 
         LaunchBall(ball);
