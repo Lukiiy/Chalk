@@ -12,7 +12,7 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> windBursts = null!;
     internal static ConfigEntry<bool> minedLootboxes = null!;
     internal static ConfigEntry<bool> holeMinefield = null!;
-    internal static ConfigEntry<bool> ballPush = null!;
+    internal static ConfigEntry<bool> ballSwap = null!;
     internal static ConfigEntry<bool> instaKills = null!;
     internal static ConfigEntry<bool> extraLoots = null!;
     internal static ConfigEntry<bool> airHornExtra = null!;
@@ -24,7 +24,7 @@ public partial class Chalk : BaseUnityPlugin
         windBursts = Config.Bind("Chalk", "Wind Bursts", true, "Toggles random bursts of wind mid match");
         minedLootboxes = Config.Bind("Chalk", "Mined Lootboxes", true, "Some loot boxes spawn with a land mine below");
         holeMinefield = Config.Bind("Chalk", "Hole Minefield", true, "Places 4 mines near the hole");
-        ballPush = Config.Bind("Chalk", "Ball Pushing", true, "Allows players to slowly push others' balls when close");
+        ballSwap = Config.Bind("Chalk", "Ball Swap", true, "Swaps players' balls at the start of a match");
         instaKills = Config.Bind("Chalk", "Instant Kills", true, "Throwing a ball out of bounds makes you explode");
         extraLoots = Config.Bind("Chalk", "Extra Loot", true, "Knocking out players gives you loot");
         airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
@@ -51,6 +51,7 @@ public partial class Chalk : BaseUnityPlugin
         if (current == MatchState.TeeOff)
         {
             StartCoroutine(ExtraMines.Start());
+            StartCoroutine(BallPatches.SwapBalls());
         }
 
         if (current == MatchState.Ended || current == MatchState.Initializing)

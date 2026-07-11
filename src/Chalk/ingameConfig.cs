@@ -10,7 +10,7 @@ namespace Chalk;
 internal static class IngameConfig
 {
     private static readonly List<string> boolOptions = ["On", "Off"];
-    private static readonly ConfigEntry<bool>[] Toggleables = [Chalk.windBursts, Chalk.minedLootboxes, Chalk.holeMinefield, Chalk.ballPush, Chalk.instaKills, Chalk.extraLoots];
+    private static readonly ConfigEntry<bool>[] Toggleables = [Chalk.windBursts, Chalk.minedLootboxes, Chalk.holeMinefield, Chalk.ballSwap, Chalk.instaKills, Chalk.extraLoots];
 
     [HarmonyPostfix]
     private static void Inject(MatchSetupRules __instance)
