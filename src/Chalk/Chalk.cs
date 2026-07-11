@@ -1,4 +1,4 @@
-﻿using BepInEx;
+﻿﻿using BepInEx;
 using BepInEx.Configuration;
 using Chalk.utils;
 using HarmonyLib;
@@ -51,7 +51,8 @@ public partial class Chalk : BaseUnityPlugin
         if (current == MatchState.TeeOff)
         {
             StartCoroutine(ExtraMines.Start());
-            StartCoroutine(BallPatches.SwapBalls());
+
+            if (ballSwap.Value && UnityEngine.Random.value > .5f) StartCoroutine(BallPatches.SwapBalls());
         }
 
         if (current == MatchState.Ended || current == MatchState.Initializing)

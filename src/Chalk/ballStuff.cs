@@ -5,7 +5,7 @@ namespace Chalk;
 
 public class BallPatches
 {
-    public static IEnumerator<object>? SwapBalls()
+    public static IEnumerator<object?> SwapBalls()
     {
         yield return null;
 
