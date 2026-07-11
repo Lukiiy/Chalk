@@ -9,7 +9,6 @@ public static class Airhorn
 {
     private const float rangeMult = 1.2f;
     private const float upwardLaunch = 25f;
-    private const float cartTiltForce = 18f;
 
     [HarmonyPatch(typeof(PlayerInventory), "UserCode_CmdPlayAirhornVfxForAllClients__NetworkConnectionToClient")]
     [HarmonyPostfix]
@@ -42,7 +41,7 @@ public static class Airhorn
         }
     }
 
-    private static IEnumerator<object>? LaunchBallAfterDelay(GolfBall ball, float delay)
+    private static IEnumerator<object?> LaunchBallAfterDelay(GolfBall ball, float delay)
     {
         yield return new WaitForSeconds(delay);
 
