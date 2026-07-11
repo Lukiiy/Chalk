@@ -5,49 +5,26 @@ namespace Chalk;
 
 public class BallPatches
 {
-    public static bool pushToggle = true;
-
-    private const float pushRadius = .8f;
-    private const float pushForce = 3f;
-    private const float pushRadiusSq = pushRadius * pushRadius;
-    private const float poleSafeRadius = 10f;
-    private const float poleSafeRadiusSq = poleSafeRadius * poleSafeRadius;
-
-    public static void Update()
+    public static IEnumerator<object>? SwapBalls()
     {
-        if (!Chalk.IsMatchActive()) return;
+        yield return null;
 
-        var players = CourseManager.ServerMatchParticipants;
-        if (players == null) return;
+        var participants = CourseManager.ServerMatchParticipants;
+        if (participants == null || participants.Count < 2) yield break;
 
-        var balls = UnityEngine.Object.FindObjectsByType<GolfBall>(FindObjectsSortMode.None);
-        if (balls.Length == 0) return;
+        var players = participants.ToList();
+        var balls = players.Select(g => g.OwnBall).ToList();
+        List<GolfBall> shuffled;
 
-        foreach (PlayerGolfer golfer in players)
+        do
         {
-            if (golfer == null) continue;
+            shuffled = balls.OrderBy(_ => UnityEngine.Random.value).ToList();
+        } while (shuffled.Where((ball, i) => ball == players[i].OwnBall).Any());
 
-            var movement = golfer?.PlayerInfo?.Movement;
-            if (movement == null) return;
-
-            Vector3 playerPos = movement.transform.position;
-
-            foreach (GolfBall ball in balls)
-            {
-                if (ball == null) return;
-                if (ball.Networkowner == golfer) continue;
-
-                if (GolfHoleManager.HasInstance && GolfHoleManager.MainHole != null && (ball.Rigidbody.position - GolfHoleManager.MainHole.transform.position).sqrMagnitude <= poleSafeRadiusSq) continue;
-
-                Vector3 delta = ball.Rigidbody.position - playerPos;
-                delta.y = 0f;
-
-                if (delta.sqrMagnitude > pushRadiusSq || delta.sqrMagnitude < 0.0001f) continue;
-
-                float strength = Mathf.InverseLerp(pushRadius, 0f, delta.magnitude) * pushForce;
-
-                ball.Rigidbody.AddForce(delta.normalized * strength, ForceMode.Impulse);
-            }
+        foreach (var (golfer, newBall) in players.Zip(shuffled, (p, b) => (p, b)))
+        {
+            golfer.NetworkownBall = newBall;
+            newBall.Networkowner = golfer;
         }
     }
 }
