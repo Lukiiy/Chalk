@@ -23,7 +23,7 @@ public class ExtraMines
     {
         foreach (var spawner in UnityEngine.Object.FindObjectsByType<ItemSpawner>(FindObjectsSortMode.None))
         {
-            if (UnityEngine.Random.value > .5f) continue;
+            if (UnityEngine.Random.value > .65f) continue;
 
             Chalk.SpawnServerMine(spawner.transform.position + Vector3.up * .25f);
         }
