@@ -16,16 +16,18 @@ public static class Airhorn
     {
         if (!Chalk.airHornExtra.Value || __instance == null || !NetworkServer.active) return;
 
-        var owner = __instance.PlayerInfo;
+        PlayerInfo owner = __instance.PlayerInfo;
         if (owner == null) return;
 
+        Vector3 origin = owner.transform.position;
         float rangeSqr = (float) Math.Pow(GameManager.ItemSettings.AirhornRange * rangeMult, 2);
 
-        foreach (var ball in UnityEngine.Object.FindObjectsByType<GolfBall>(FindObjectsSortMode.None))
+        foreach (GolfBall ball in UnityEngine.Object.FindObjectsByType<GolfBall>(FindObjectsSortMode.None))
         {
-            if (ball == null || !ball.isServer || (ball.transform.position - owner.transform.position).sqrMagnitude > rangeSqr) continue;
+            if (ball == null || !ball.isServer || (ball.transform.position - origin).sqrMagnitude > rangeSqr) continue;
 
             bool someoneClose = false;
+
             foreach (var player in UnityEngine.Object.FindObjectsByType<PlayerInfo>(FindObjectsSortMode.None))
             {
                 if (player == null) continue;
@@ -38,6 +40,20 @@ public static class Airhorn
             }
 
             if (someoneClose) owner.StartCoroutine(LaunchBallAfterDelay(ball, 0.75f)); else LaunchBall(ball);
+        }
+
+        foreach (GolfCartInfo cart in UnityEngine.Object.FindObjectsByType<GolfCartInfo>(FindObjectsSortMode.None))
+        {
+            if (cart == null || (cart.transform.position - origin).sqrMagnitude > rangeSqr) continue;
+
+            var rigid = cart.AsEntity.Rigidbody;
+
+            cart.ServerSetMovementSyncDirectionForAllClients(SyncDirection.ServerToClient); // make cart to do what server says
+
+            Vector3 dir = (cart.transform.position - origin).normalized;
+
+            rigid.linearVelocity = rigid.linearVelocity + Vector3.up * 8f + dir * 4f;
+            rigid.angularVelocity = UnityEngine.Random.insideUnitSphere * 6f;
         }
     }
 
