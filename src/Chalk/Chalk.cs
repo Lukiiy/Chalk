@@ -16,6 +16,7 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> instaKills = null!;
     internal static ConfigEntry<bool> extraLoots = null!;
     internal static ConfigEntry<bool> airHornExtra = null!;
+    internal static ConfigEntry<bool> mineChain = null!;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public partial class Chalk : BaseUnityPlugin
         instaKills = Config.Bind("Chalk", "Instant Kills", true, "Throwing a ball out of bounds makes you explode");
         extraLoots = Config.Bind("Chalk", "Extra Loot", true, "Knocking out players gives you loot");
         airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
+        mineChain = Config.Bind("Chalk", "Mine Chain", true, "An activated landmine will blow up if it collides with another activated landmine");
 
         harmony.PatchAll();
         CourseManager.MatchStateChanged += OnMatchStateChanged;
