@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Mirror;
 using UnityEngine;
 
 namespace Chalk;
@@ -10,7 +11,7 @@ public class InstaKill
     [HarmonyPostfix]
     private static void BallReturnToBounds(GolfBall __instance)
     {
-        if (!Chalk.instaKills.Value || __instance == null || !__instance.isServer) return;
+        if (!Chalk.instaKills.Value || __instance == null || !__instance.isServer || !NetworkServer.active) return;
 
         var playerInfo = __instance.Networkowner?.PlayerInfo;
         if (playerInfo == null) return;

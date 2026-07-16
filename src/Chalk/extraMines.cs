@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Reflection;
 using HarmonyLib;
+using Mirror;
 using UnityEngine;
 
 namespace Chalk;
@@ -53,7 +54,7 @@ public class ExtraMines
     [HarmonyPostfix]
     private static void MineChain(Landmine __instance, Collision collision)
     {
-        if (!Chalk.mineChain.Value || !__instance.isServer) return;
+        if (!Chalk.mineChain.Value || !__instance.isServer || !NetworkServer.active) return;
 
         if (!collision.collider.TryGetComponent(out Landmine otherMine) || otherMine == null) return;
 
