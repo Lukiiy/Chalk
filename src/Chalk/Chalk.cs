@@ -72,7 +72,7 @@ public partial class Chalk : BaseUnityPlugin
         PlayerInventory? inv = FakeInventory.Get();
         if (inv == null) return;
 
-        ItemUseId useId = new(0uL, 1, ItemType.Landmine);
+        ItemUseId useId = new(0uL, 1, ItemType.Landmine, false);
 
         CourseManager.ServerSpawnLandmine(pos, Quaternion.identity, Vector3.zero, Vector3.zero, LandmineArmType.Planted, useId, inv);
     }

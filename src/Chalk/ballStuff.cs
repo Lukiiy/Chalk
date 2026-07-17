@@ -6,7 +6,7 @@ public class BallPatches
     {
         yield return null;
 
-        var participants = CourseManager.ServerMatchParticipants;
+        var participants = CourseManager.MatchParticipants;
         if (participants == null || participants.Count < 2) yield break;
 
         var players = participants.ToList();

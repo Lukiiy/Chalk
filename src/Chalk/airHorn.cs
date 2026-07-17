@@ -10,7 +10,7 @@ public static class Airhorn
     private const float rangeMult = 1.2f;
     private const float upwardLaunch = 25f;
 
-    [HarmonyPatch(typeof(PlayerInventory), "UserCode_CmdPlayAirhornVfxForAllClients__NetworkConnectionToClient")]
+    [HarmonyPatch(typeof(PlayerInventory), "PlayAirhornVfxInternal")]
     [HarmonyPostfix]
     private static void Used(PlayerInventory __instance)
     {
