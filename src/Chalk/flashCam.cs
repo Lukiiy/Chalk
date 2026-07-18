@@ -13,11 +13,19 @@ public static class FlashCam
     {
         if (!NetworkServer.active || __instance.PlayerInfo == null) return;
 
-        float rangeSq = Mathf.Pow(GameManager.ItemSettings.FlashCameraMaxRange, 2) / 1.5f;
+        Transform origin = __instance.PlayerInfo.transform;
 
-        foreach (Landmine mine in UnityEngine.Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None))
+        float range = GameManager.ItemSettings.FlashCameraMaxRange;
+        const float viewAngle = 35f;
+
+        foreach (var mine in UnityEngine.Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None))
         {
-            if (mine == null || !mine.isServer || (mine.transform.position - __instance.PlayerInfo.transform.position).sqrMagnitude > rangeSq) continue;
+            if (mine == null || !mine.isServer) continue;
+
+            Vector3 toMine = mine.transform.position - origin.position;
+            float dist = toMine.magnitude;
+
+            if (dist > range || dist < .01f || Vector3.Angle(origin.forward, toMine) > viewAngle) continue;
 
             ExtraMines.ExplodeMethod.Invoke(mine, null);
         }
