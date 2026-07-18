@@ -18,6 +18,7 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> extraLoots = null!;
     internal static ConfigEntry<bool> airHornExtra = null!;
     internal static ConfigEntry<bool> mineChain = null!;
+    internal static ConfigEntry<bool> mineFlashing = null!;
 
     internal static ManualLogSource Log = null!;
 
@@ -33,6 +34,7 @@ public partial class Chalk : BaseUnityPlugin
         extraLoots = Config.Bind("Chalk", "Extra Loot", true, "Knocking out players gives you loot");
         airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
         mineChain = Config.Bind("Chalk", "Mine Chain", true, "An activated landmine will blow up if it collides with another activated landmine");
+        mineFlashing = Config.Bind("Chalk", "Mine Flashing", true, "Mines can be detonated with a Flash Camera");
 
         harmony.PatchAll();
         CourseManager.MatchStateChanged += OnMatchStateChanged;

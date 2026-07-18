@@ -11,7 +11,7 @@ public static class FlashCam
     [HarmonyPostfix]
     private static void Flash(PlayerInventory __instance, NetworkConnectionToClient sender)
     {
-        if (!NetworkServer.active || __instance.PlayerInfo == null) return;
+        if (!Chalk.mineFlashing.Value || !NetworkServer.active || __instance.PlayerInfo == null) return;
 
         Transform origin = __instance.PlayerInfo.transform;
 
