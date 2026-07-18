@@ -28,7 +28,7 @@ public partial class Chalk : BaseUnityPlugin
         windBursts = Config.Bind("Chalk", "Wind Bursts", true, "Toggles random bursts of wind mid match");
         minedLootboxes = Config.Bind("Chalk", "Mined Lootboxes", true, "Some loot boxes spawn with a land mine below");
         holeMinefield = Config.Bind("Chalk", "Hole Minefield", true, "Places 4 mines near the hole");
-        ballSwap = Config.Bind("Chalk", "Ball Swap", true, "Swaps players' balls at the start of a match");
+        ballSwap = Config.Bind("Chalk", "Ball Swap", false, "Swaps players' balls at the start of a match");
         instaKills = Config.Bind("Chalk", "Instant Kills", true, "Throwing a ball out of bounds makes you explode");
         extraLoots = Config.Bind("Chalk", "Extra Loot", true, "Knocking out players gives you loot");
         airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
