@@ -1,5 +1,6 @@
 using BepInEx;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 using Chalk.utils;
 using HarmonyLib;
 using UnityEngine;
@@ -17,6 +18,8 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> extraLoots = null!;
     internal static ConfigEntry<bool> airHornExtra = null!;
     internal static ConfigEntry<bool> mineChain = null!;
+
+    internal static ManualLogSource Log = null!;
 
     private void Awake()
     {
