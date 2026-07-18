@@ -11,9 +11,7 @@ namespace Chalk;
 [HarmonyPatch]
 public class ExtraMines
 {
-    private static readonly MethodInfo ExplodeMethod = AccessTools.Method(typeof(Landmine), "ServerExplode", []);
-    private static readonly MethodInfo WillBeReflectedMethod = AccessTools.Method(typeof(Landmine), "WillBeReflectedOnCollision", [typeof(Entity)]);
-    private static readonly MethodInfo IsTeammateMethod = AccessTools.Method(typeof(Landmine), "IsTeammateOfOwner", [typeof(Entity)]);
+    internal static readonly MethodInfo ExplodeMethod = AccessTools.Method(typeof(Landmine), "ServerExplode", []);
 
     public static bool seeded = true;
 
