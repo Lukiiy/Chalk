@@ -19,6 +19,7 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> airHornExtra = null!;
     internal static ConfigEntry<bool> mineChain = null!;
     internal static ConfigEntry<bool> mineFlashing = null!;
+    internal static ConfigEntry<bool> holeBlocker = null!;
 
     internal static ManualLogSource Log = null!;
 
@@ -35,6 +36,7 @@ public partial class Chalk : BaseUnityPlugin
         airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
         mineChain = Config.Bind("Chalk", "Mine Chain", true, "An activated landmine will blow up if it collides with another activated landmine");
         mineFlashing = Config.Bind("Chalk", "Mine Flashing", true, "Mines can be detonated with a Flash Camera");
+        holeBlocker = Config.Bind("Chalk", "Hole Blocker", true, "Places a mine on the hole to block it for the first 15 seconds!");
 
         harmony.PatchAll();
         CourseManager.MatchStateChanged += OnMatchStateChanged;
@@ -60,6 +62,7 @@ public partial class Chalk : BaseUnityPlugin
             StartCoroutine(ExtraMines.Start());
 
             if (ballSwap.Value && UnityEngine.Random.value > .5f) StartCoroutine(BallPatches.SwapBalls());
+            StartCoroutine(BallPatches.HoleBlocker());
         }
 
         if (current == MatchState.Ended || current == MatchState.Initializing)

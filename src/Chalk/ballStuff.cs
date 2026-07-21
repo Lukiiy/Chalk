@@ -1,3 +1,7 @@
+using Chalk.utils;
+using Mirror;
+using UnityEngine;
+
 namespace Chalk;
 
 public class BallPatches
@@ -22,6 +26,23 @@ public class BallPatches
         {
             golfer.NetworkownBall = newBall;
             newBall.Networkowner = golfer;
+        }
+    }
+
+    public static IEnumerator<object?> HoleBlocker()
+    {
+        Vector3 minePos = GolfHoleManager.MainHole.transform.position + Vector3.up * 1.1f;
+
+        Chalk.SpawnServerMine(minePos);
+
+        yield return new WaitForSeconds(15f); // 15 seconds!
+
+        foreach (Landmine mine in UnityEngine.Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None))
+        {
+            if (mine == null || !mine.TryGetComponent<ChalkMine>(out _) || (mine.transform.position - minePos).sqrMagnitude > .01f) continue;
+
+            NetworkServer.Destroy(mine.gameObject);
+            break;
         }
     }
 }
