@@ -33,10 +33,10 @@ public partial class Chalk : BaseUnityPlugin
         ballSwap = Config.Bind("Chalk", "Ball Swap", false, "Swaps players' balls at the start of a match");
         instaKills = Config.Bind("Chalk", "Instant Kills", true, "Throwing a ball out of bounds makes you explode");
         extraLoots = Config.Bind("Chalk", "Extra Loot", true, "Knocking out players gives you loot");
-        airHornExtra = Config.Bind("Chalk", "Extra Air Horn interactions", true, "Some extra air horn interactions :)");
+        airHornExtra = Config.Bind("Chalk", "Extra horn interactions", true, "Adds some extra air horn interactions (with balls and carts) :)");
         mineChain = Config.Bind("Chalk", "Mine Chain", true, "An activated landmine will blow up if it collides with another activated landmine");
         mineFlashing = Config.Bind("Chalk", "Mine Flashing", true, "Mines can be detonated with a Flash Camera");
-        holeBlocker = Config.Bind("Chalk", "Hole Blocker", true, "Places a mine on the hole to block it for the first 15 seconds!");
+        holeBlocker = Config.Bind("Chalk", "Hole Blocker", false, "Places a mine on the hole to block it for the first 15 seconds!");
 
         harmony.PatchAll();
         CourseManager.MatchStateChanged += OnMatchStateChanged;
