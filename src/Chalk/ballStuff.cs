@@ -35,7 +35,7 @@ public class BallPatches
 
         Chalk.SpawnServerMine(minePos);
 
-        yield return new WaitForSeconds(15f); // 15 seconds!
+        yield return new WaitForSeconds(10f); // 10 seconds!
 
         foreach (Landmine mine in UnityEngine.Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None))
         {
