@@ -84,4 +84,24 @@ public partial class Chalk : BaseUnityPlugin
 
         CourseManager.ServerSpawnLandmine(pos, Quaternion.identity, Vector3.zero, Vector3.zero, LandmineArmType.Planted, useId, inv);
     }
+
+    public static string GetFormattedRules()
+    {
+        List<string> enabled = [];
+
+        if (windBursts.Value) enabled.Add("wind bursts");
+        if (minedLootboxes.Value) enabled.Add("mined boxes");
+        if (holeMinefield.Value) enabled.Add("hole minefield");
+        if (ballSwap.Value) enabled.Add("ball swap");
+        if (instaKills.Value) enabled.Add("out of bounds kills");
+        if (extraLoots.Value) enabled.Add("knockin' out loot");
+        if (airHornExtra.Value) enabled.Add("horns tumble carts");
+        if (mineFlashing.Value) enabled.Add("flash affect mines");
+        if (holeBlocker.Value) enabled.Add("NO hole in 1?");
+        if (itemBoxTriple.Value) enabled.Add("boxes gives 3x");
+
+        if (enabled.Count < 1) return string.Empty;
+
+        return $"Enabled: <color=#ffb37d>{string.Join(", ", enabled)}</color>";
+    }
 }
