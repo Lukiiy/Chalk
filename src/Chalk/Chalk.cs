@@ -1,3 +1,4 @@
+using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -20,6 +21,7 @@ public partial class Chalk : BaseUnityPlugin
     internal static ConfigEntry<bool> mineChain = null!;
     internal static ConfigEntry<bool> mineFlashing = null!;
     internal static ConfigEntry<bool> holeBlocker = null!;
+    internal static ConfigEntry<bool> itemBoxTriple = null!;
 
     internal static ManualLogSource Log = null!;
 
@@ -37,21 +39,16 @@ public partial class Chalk : BaseUnityPlugin
         mineChain = Config.Bind("Chalk", "Mine Chain", true, "An activated landmine will blow up if it collides with another activated landmine");
         mineFlashing = Config.Bind("Chalk", "Mine Flashing", true, "Mines can be detonated with a Flash Camera");
         holeBlocker = Config.Bind("Chalk", "Hole Blocker", false, "Places a mine on the hole to block it for the first 15 seconds!");
+        itemBoxTriple = Config.Bind("Chalk", "Item Box Triple", false, "Item boxes spawn with 3 items instead of 1");
 
         harmony.PatchAll();
         CourseManager.MatchStateChanged += OnMatchStateChanged;
         WindBursts.Start();
     }
 
-    private void Update()
-    {
-        WindBursts.Update();
-    }
+    private void Update() => WindBursts.Update();
 
-    private void OnDestroy()
-    {
-        CourseManager.MatchStateChanged -= OnMatchStateChanged;
-    }
+    private void OnDestroy() => CourseManager.MatchStateChanged -= OnMatchStateChanged;
 
     private void OnMatchStateChanged(MatchState previous, MatchState current)
     {
@@ -65,10 +62,7 @@ public partial class Chalk : BaseUnityPlugin
             StartCoroutine(BallPatches.HoleBlocker());
         }
 
-        if (current == MatchState.Ended || current == MatchState.Initializing)
-        {
-            ExtraMines.seeded = false;
-        }
+        if (current == MatchState.Ended || current == MatchState.Initializing) ExtraMines.seeded = false;
     }
 
     public static bool IsMatchActive() => CourseManager.MatchState is MatchState.TeeOff or MatchState.Ongoing or MatchState.CountingDownToEnd or MatchState.Overtime;
