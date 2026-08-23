@@ -1,6 +1,8 @@
 using System.Reflection;
 using HarmonyLib;
 
+namespace Chalk;
+
 [HarmonyPatch]
 internal static class ItemSpawner3ItemsThing
 {
@@ -8,7 +10,7 @@ internal static class ItemSpawner3ItemsThing
 
     static void Postfix(ItemSpawner __instance, PlayerInventory playerInventory, bool __result)
     {
-        if (!__result) return;
+        if (Chalk.itemBoxTriple.Value && !__result) return;
 
         for (int i = 0; i < 2; i++)
         {
