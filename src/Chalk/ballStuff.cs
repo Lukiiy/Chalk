@@ -10,22 +10,29 @@ public class BallPatches
     {
         yield return null;
 
-        var participants = CourseManager.MatchParticipants;
+        var participants = CourseManager.MatchParticipants?.ToList();
         if (participants == null || participants.Count < 2) yield break;
 
-        var players = participants.ToList();
-        var balls = players.Select(g => g.OwnBall).ToList();
-        List<GolfBall> shuffled;
+        const float maxDist = 15f;
+        var unmatched = new List<PlayerGolfer>(participants);
 
-        do
+        while (unmatched.Count > 1)
         {
-            shuffled = balls.OrderBy(_ => UnityEngine.Random.value).ToList();
-        } while (shuffled.Where((ball, i) => ball == players[i].OwnBall).Any());
+            var playerA = unmatched[0];
+            unmatched.RemoveAt(0);
 
-        foreach (var (golfer, newBall) in players.Zip(shuffled, (p, b) => (p, b)))
-        {
-            golfer.NetworkownBall = newBall;
-            newBall.Networkowner = golfer;
+            var playerB = unmatched.Where(p => Vector3.Distance(playerA.OwnBall.transform.position, p.OwnBall.transform.position) <= maxDist).OrderBy(p => Vector3.Distance(playerA.OwnBall.transform.position, p.OwnBall.transform.position)).FirstOrDefault();
+            if (playerB == null) continue;
+
+            unmatched.Remove(playerB);
+
+            var aBall = playerA.OwnBall;
+            var bBall = playerB.OwnBall;
+
+            playerA.NetworkownBall = bBall;
+            playerB.NetworkownBall = aBall;
+            aBall.Networkowner = playerB;
+            bBall.Networkowner = playerA;
         }
     }
 
