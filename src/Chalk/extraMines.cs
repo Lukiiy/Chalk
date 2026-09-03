@@ -66,7 +66,7 @@ public class ExtraMines
         ExplodeMethod.Invoke(otherMine, null);
     }
 
-    // Tags mines spawned by Chalk with the custom component.
+    // Mark mod spawned landmines
     [HarmonyPatch(typeof(Landmine), "ServerInitialize")]
     [HarmonyPostfix]
     private static void Tag(Landmine __instance, PlayerInventory owner)
@@ -74,7 +74,6 @@ public class ExtraMines
         if (owner == FakeInventory.Get()) __instance.gameObject.AddComponent<ChalkMine>();
     }
 
-    // Replaces the vanilla velocity check with ChalkThreshold to override mine detection for mines spawned by Chalk.
     [HarmonyPatch(typeof(Landmine), "ProcessCollidersInWarningRange")]
     [HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> VelocityCheck(IEnumerable<CodeInstruction> instructions)
@@ -82,7 +81,6 @@ public class ExtraMines
         var getter = AccessTools.PropertyGetter(typeof(ItemSettings), nameof(ItemSettings.LandmineDetectionMinSpeedSquared));
         var helper = AccessTools.Method(typeof(ExtraMines), nameof(ChalkThreshold));
 
-        // Replace the vanilla getter with ChalkThreshold.
         foreach (var code in instructions)
         {
             yield return code;
@@ -95,5 +93,5 @@ public class ExtraMines
         }
     }
 
-    private static float ChalkThreshold(float vanilla, Landmine mine) => mine.TryGetComponent<ChalkMine>(out _) ? 0f : vanilla; // This overrides the vanilla threshold to 0 for mines spawned by Chalk.
+    private static float ChalkThreshold(float vanilla, Landmine mine) => mine.TryGetComponent<ChalkMine>(out _) ? 0f : vanilla;
 }
