@@ -59,9 +59,7 @@ public class ExtraMines
     [HarmonyPostfix]
     private static void MineChain(Landmine __instance, Collision collision)
     {
-        if (!Chalk.mineChain.Value || !__instance.isServer || !NetworkServer.active) return;
-
-        if (!collision.collider.TryGetComponent(out Landmine otherMine) || otherMine == null) return;
+        if (!Chalk.mineChain.Value || !__instance.isServer || !NetworkServer.active || !collision.collider.TryGetComponent(out Landmine otherMine) || otherMine == null) return;
 
         ExplodeMethod.Invoke(__instance, null);
         ExplodeMethod.Invoke(otherMine, null);
