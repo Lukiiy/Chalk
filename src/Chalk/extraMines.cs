@@ -12,6 +12,7 @@ namespace Chalk;
 public class ExtraMines
 {
     internal static readonly MethodInfo ExplodeMethod = AccessTools.Method(typeof(Landmine), "ServerExplode", []);
+    private static readonly MethodInfo MineDetection = AccessTools.PropertyGetter(typeof(ItemSettings), nameof(ItemSettings.LandmineDetectionMinSpeedSquared));
 
     public static bool seeded = true;
 
@@ -78,20 +79,15 @@ public class ExtraMines
     [HarmonyTranspiler]
     private static IEnumerable<CodeInstruction> VelocityCheck(IEnumerable<CodeInstruction> instructions)
     {
-        var getter = AccessTools.PropertyGetter(typeof(ItemSettings), nameof(ItemSettings.LandmineDetectionMinSpeedSquared));
-        var helper = AccessTools.Method(typeof(ExtraMines), nameof(ChalkThreshold));
-
         foreach (var code in instructions)
         {
             yield return code;
 
-            if (code.Calls(getter))
+            if (code.Calls(MineDetection))
             {
                 yield return new CodeInstruction(OpCodes.Ldarg_0);
-                yield return new CodeInstruction(OpCodes.Call, helper);
+                yield return Transpilers.EmitDelegate<Func<float, Landmine, float>>((original, mine) => mine.TryGetComponent<ChalkMine>(out _) ? 0f : original);
             }
         }
     }
-
-    private static float ChalkThreshold(float vanilla, Landmine mine) => mine.TryGetComponent<ChalkMine>(out _) ? 0f : vanilla;
 }
