@@ -18,7 +18,7 @@ public static class FlashCam
         float range = GameManager.ItemSettings.FlashCameraMaxRange;
         const float viewAngle = 35f;
 
-        foreach (var mine in UnityEngine.Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None))
+        foreach (Landmine mine in UnityEngine.Object.FindObjectsByType<Landmine>(FindObjectsSortMode.None))
         {
             if (mine == null || !mine.isServer) continue;
 
@@ -28,6 +28,18 @@ public static class FlashCam
             if (dist > range || dist < .01f || Vector3.Angle(origin.forward, toMine) > viewAngle) continue;
 
             ExtraMines.ExplodeMethod.Invoke(mine, null);
+        }
+
+        foreach (Rocket rocket in UnityEngine.Object.FindObjectsByType<Rocket>(FindObjectsSortMode.None))
+        {
+            if (rocket == null || !rocket.isServer) continue;
+
+            Vector3 toRocket = rocket.transform.position - origin.position;
+            float dist = toRocket.magnitude;
+
+            if (dist > range || dist < .01f || Vector3.Angle(origin.forward, toRocket) > viewAngle) continue;
+
+            NetworkServer.Destroy(rocket.gameObject);
         }
     }
 }
